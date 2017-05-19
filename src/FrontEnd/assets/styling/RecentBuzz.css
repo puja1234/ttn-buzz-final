@@ -1,0 +1,166 @@
+.recentBuzz {
+    border: 1px solid black;
+}
+
+.recentBuzz .caption {
+    border-bottom: 1px solid black;
+    background: #EBEBEC;
+    width: 97%;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.recentBuzz .posts {
+    padding: 0px 40px;
+    background-color: white;
+}
+
+.recentBuzz .posted-image {
+    display: block;
+    width: 250px;
+}
+
+.recentBuzz .like-dislike {
+    padding: 2px;
+    text-align: center;
+    float: right;
+    width: 5%;
+
+    border-radius: 5px;
+}
+
+.recentBuzz .like-dislike img {
+    width: 50%;
+}
+
+.recentBuzz .comment {
+    clear: both;
+    width: 100%;
+    display: block;
+}
+
+.recent-buzz-body {
+    border : 1px solid black;
+}
+
+.recentBuzz-footer button {
+
+}
+
+.category {
+    width: 15%;
+    float: right;
+    border: 1px solid black;
+    margin-top: 17px;
+    background-color: bisque;
+}
+
+.user_imageurl {
+    padding-top: 11px;
+}
+
+.user_email {
+
+}
+
+.likecount{
+    float: right;
+}
+.dislikecount {
+    float: right;
+}
+
+ul li a:hover{
+    color: #fff;
+    background: #939393;
+}
+ul li ul.dropdown{
+     /* Set width of the dropdown */
+    background: #f2f2f2;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+}
+ul li:hover ul.dropdown{
+    display: block;	/* Display the dropdown */
+}
+ul li ul.dropdown li{
+    display: block;
+}
+
+.delete {
+    float: right;
+}
+
+.edit {
+    float: right;
+}
+
+.comments {
+    border: 1px solid black;
+    padding-top: 23px;
+}
+
+.addComment {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.submitComment {
+    width: 60px;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.recentBuzz .dropdown {
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.recentBuzz .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.recentBuzz .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.recentBuzz .dropdown-content a:hover {background-color: #f1f1f1}
+
+.recentBuzz .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.recentBuzz .dropdown:hover .dropbtn {
+    background-color:  #424242;
+}
+
+.like-dislike-btn{
+    background-color: blue;
+    /* text-align: center; */
+    padding: 35% 35%;
+    /* line-height: 2; */
+    color: white;
+    /* padding: 15px 10px; */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}

@@ -1,0 +1,404 @@
+/*body {*/
+    /*box-sizing: border-box;*/
+    /*background: url('../../assets/images/app-back.jpg');*/
+/*}*/
+/*.view {*/
+    /*padding:0% 1%;*/
+/*}*/
+/*.mainContainer {*/
+
+    /*background-color: rgba(204, 204, 204, 0.25);*/
+/*}*/
+/*.headerContainer {*/
+    /*position: relative;*/
+    /*margin-bottom: 20px;*/
+/*}*/
+/*.headerContainer>img {*/
+    /*width: 100%;*/
+    /*height: 230px;;*/
+/*}*/
+
+/*.logoToTheNew {*/
+    /*position: absolute;*/
+    /*top:2%;*/
+    /*left: 5%;*/
+    /*width: 10%;*/
+/*}*/
+
+/*.textOnBanner {*/
+    /*position: absolute;*/
+    /*top: 40%;*/
+    /*left:3%;*/
+    /*font-size: 28px;*/
+    /*font-family: Tahoma;*/
+    /*font-weight: bold;*/
+    /*color: #ffffff;*/
+
+/*}*/
+
+/*.textOnBanner p {*/
+    /*display: block;*/
+/*}*/
+
+/*buzz-body {*/
+    /*background: #EBEBEC;*/
+    /*width: 80%;*/
+    /*float: right;*/
+/*}*/
+/*.wrapper {*/
+    /*background: rgba(255, 255, 255, 0.18);*/
+    /*width:95%;*/
+/*}*/
+
+/*.buzz-details {*/
+    /*border-radius: 3px;*/
+    /*background: transparent;*/
+    /*display: block;*/
+    /*width: 82%;*/
+    /*margin: 0px 74.1562px 0px 70.1406px;*/
+    /*height: 100px*/
+/*}*/
+
+/*.dropbtn {*/
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
+    /*padding: 8px;*/
+    /*font-size: 16px;*/
+    /*border: none;*/
+    /*cursor: pointer;*/
+    /*border-radius:5px;*/
+/*}*/
+
+/*.dropdown {*/
+    /*float:left;*/
+/*}*/
+
+
+/*.dropdown .dropbtn {*/
+    /*background-color: #3e8e41;*/
+    /*width:102%;*/
+/*}*/
+
+/*.upload {*/
+    /*width: 5%;*/
+    /*float:left;*/
+    /*margin: 0px 20px;*/
+/*}*/
+/*.upload input[type='image'] {*/
+    /*width:10%;*/
+/*}*/
+/*.upload #clickMe {*/
+    /*display:none;*/
+/*}*/
+
+/*.upload-image{*/
+    /*height:10%;*/
+    /*width: 100%;*/
+/*}*/
+
+
+/*.submit-buzz {*/
+    /*padding: 10px;*/
+    /*color: white;*/
+    /*float: right;*/
+    /*background: #1e90ff;*/
+    /*border: none;*/
+    /*border-radius: 5px;*/
+/*}*/
+
+/*.end {*/
+    /*color:darkgrey;*/
+    /*text-align: center;*/
+    /*font-size: 40px;*/
+    /*display: block;*/
+    /*clear:both;*/
+/*}*/
+
+
+
+/*.navbar {*/
+    /*float: left;*/
+    /*background: #EBEBEC;*/
+    /*width: 20%;*/
+/*}*/
+
+/*ul {*/
+    /*list-style-type: none;*/
+    /*padding: 0px;*/
+    /*margin: 0px;*/
+/*}*/
+
+/*a {*/
+    /*text-decoration: none;*/
+/*}*/
+
+/*.main-menu {*/
+    /*border:1px solid black;*/
+/*}*/
+
+/*.main-menu li {*/
+    /*margin:10px 0px;*/
+/*}*/
+
+/*.main-menu li a {*/
+    /*color:dimgrey;*/
+    /*padding:10px;*/
+    /*display: block;*/
+/*}*/
+
+/*.main-menu li:not(:last-child){*/
+    /*border-bottom: 1px solid black;*/
+/*}*/
+
+/*.main-menu a:hover {*/
+    /*color: orangered;*/
+/*}*/
+/*.main-menu span {*/
+    /*float:right;*/
+    /*clear:right;*/
+/*}*/
+
+/*.help-menu {*/
+    /*float:right;*/
+    /*margin:10px;*/
+/*}*/
+
+/*.help-menu li {*/
+    /*float:left;*/
+    /*margin:7px 0px 0px 14px;*/
+/*}*/
+
+/*.help-menu li a{*/
+    /*color:#1e90ff;*/
+/*}*/
+
+/*p {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.buzz-body {*/
+    /*width: 79%;*/
+    /*float: left;*/
+/*}*/
+
+/*.header {*/
+    /*border-radius: 3px;*/
+    /*background: #EBEBEC;*/
+    /*padding: 15px;*/
+    /*margin: 0 auto;*/
+    /*width: 79%;*/
+    /*border: 1px solid #979a97;*/
+    /*border-width: 1px 1px 0px 1px;*/
+
+
+/*}*/
+
+/*.header img {*/
+    /*width:2%;*/
+/*}*/
+
+/*.buzz-footer {*/
+    /*margin: 0 auto;*/
+    /*width: 82%;*/
+    /*display: table;*/
+    /*content: '';*/
+    /*clear: both;*/
+    /*background: #EBEBEC;*/
+    /*border: 1px solid #979a97;*/
+    /*border-width: 0px 1px 1px 1px;*/
+    /*border-radius: 3px;*/
+/*}*/
+
+/*.logoutContainer {*/
+    /*z-index:1;*/
+    /*position: relative;*/
+    /*float:right;*/
+    /*display: block;*/
+    /*padding:5px;*/
+/*}*/
+
+/*.userimage {*/
+    /*padding: 10px 0 10px 84px*/
+/*}*/
+
+/*.userEmail {*/
+    /*text-align: center;*/
+    /*padding-bottom: 10px*/
+/*}*/
+
+/*.errorBuzz {*/
+
+    /*padding: 10px 0 0 304px;*/
+    /*font-size: x-large;*/
+    /*color: red;*/
+/*}*/
+
+/*.imagePreview {*/
+
+    /*width: 258px;*/
+    /*padding-left: 139px;*/
+
+/*}*/
+
+.my-container{
+    width:92%;
+    margin:0px auto;
+    clear:both;
+    padding:0px 0px;
+    position:relative;
+}
+
+.logo {
+    float:left;
+    width:10%;
+}
+
+.logout {
+    float: right;
+    width: 30px;
+    padding: 20px 0px 0px 0px;
+    height: 0px;
+    background: url('../images/logout.jpg') no-repeat;
+    overflow: hidden;
+    display: inline-block;
+    background-size: contain;
+}
+.my-container ul{
+    list-style-type: none;
+    float:right;
+    clear:right;
+}
+
+#topMostNavBar li{
+    float: right;
+}
+
+a{
+    text-decoration: none;
+    color: #2a21ef;
+    cursor:pointer;
+}
+
+.my-container hr{
+    border:1px solid #2a21ef;
+    clear:both;
+}
+.pro-pic {
+    display: block;
+    border-radius: 50%;
+}
+
+#topMostNavBar li:nth-child(2) {
+    color:#2a21ef;
+    margin:10px 10px;
+}
+
+#topMostNavBar li:nth-child(1) {
+    margin:10px 0px 10px 0px;
+}
+
+.second-menu li{
+    font-size: 20px;
+    margin:0px 10px;
+    float:left;
+}
+.banner {
+    width:100%;
+    display: block;
+    height: 225px;
+}
+
+footer{
+    color: #2a21ef;
+    text-align: center;
+}
+
+footer .links a {
+    display: inline-block;
+    margin:5px;
+}
+
+.buzz-container {
+    background-image: url("http://graphicdesignjunction.com/wp-content/uploads/2012/10/background+pattern+design+33.jpg");
+    margin: 20px auto;
+}
+
+.header {
+    color:white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #2a21ef;
+    padding: 10px;
+}
+
+.header img {
+    width:2%;
+}
+
+.buzz-details {
+    width:100%;
+}
+
+.wrapper .header {
+    width: 100%;
+    padding: 10px 1px;
+}
+
+.buzz-details{
+    padding: 10px 0px;
+    width: 100%;
+}
+.buzz-footer {
+    display: table;
+    content: '';
+    width: 100%;
+}
+
+.dropdown {
+    float: left;
+}
+
+form {
+    margin:10px;
+    display: inline-block;
+    width: 20%;
+}
+
+.submit-buzz {
+    padding: 19px;
+    float: right;
+    background: #2a21ef;
+    border: none;
+    color: white;
+    border-radius: 6px;
+}
+
+.buzz-footer .dropbtn {
+    background-color: #2a21ef;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.imagePreview {
+    width: 250px;
+    padding-left: 230px;
+}
+
+.textOnBanner {
+    position: absolute;
+    top: 40%;
+    left: 3%;
+    font-size: 28px;
+    ont-family: Tahoma;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.buzz-wrapper {
+    width: 80%;
+    margin-left: 10%;
+
+}
