@@ -32,7 +32,10 @@ import {
     CHANGE_COMPLAINT_STARTED,
     CHANGE_COMPLAINT_SUCCESS,
     CHANGE_COMPLAINT_FAILED,
-    GET_ALL_COMPLAINT_SUCCESS
+    GET_ALL_COMPLAINT_SUCCESS,
+    DELETE_COMPLAINT_STARTED,
+    DELETE_COMPLAINT_SUCCESS,
+    DELETE_COMPLAINT_FAILED
 } from './../config/config.constants'
 
 export function apiCallStarted() {
@@ -170,6 +173,18 @@ export function changeStatusFailed(err) {
 
 export function myComplaintGetSuccess(allcomplaints) {
     return { type:GET_ALL_COMPLAINT_SUCCESS,allcomplaints }
+}
+
+export function deleteComplaintStarted() {
+    return { type:DELETE_COMPLAINT_STARTED }
+}
+
+export function deleteComplaintSuccess(deletedComplaint) {
+    return { type:DELETE_COMPLAINT_SUCCESS,deletedComplaint}
+}
+
+export function deleteComplaintFailed(err) {
+    return { type:DELETE_COMPLAINT_FAILED,err }
 }
 
 

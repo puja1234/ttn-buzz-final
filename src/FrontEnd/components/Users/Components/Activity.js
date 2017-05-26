@@ -9,12 +9,14 @@ export default class Activity extends Component{
         super(props);
     }
 
-    render(){
+    componentDidMount(){
 
+    }
+    render(){
         let index =0;
         console.log("ACTIVITYYYYY",this.props);
         const recent_buzz = this.props.ReduxProps.postFetch.buzz;
-        console.log("ACTIVITYYYYYYYY buzz",recent_buzz)
+        console.log("ACTIVITYYYYYYYY buzz",recent_buzz);
         const commentsState = get(this.props.ReduxProps.commentReducer,'commentPost in ACTIVITYYYYYYYY');
         console.log("content in comments in ACTIVITYYYYYYYYYYY is....................",commentsState);
 

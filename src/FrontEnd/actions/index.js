@@ -11,5 +11,6 @@ export {
     asyncPostComplaint,
     asyncGetComplaints,
     asyncUpdateStatus,
-    asyncGetMyComplaints
+    asyncGetMyComplaints,
+    asyncDeleteComplaint
 } from './async.actions'

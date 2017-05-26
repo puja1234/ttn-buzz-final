@@ -8,7 +8,10 @@ import {
     CHANGE_COMPLAINT_STARTED,
     CHANGE_COMPLAINT_SUCCESS,
     CHANGE_COMPLAINT_FAILED,
-    GET_ALL_COMPLAINT_SUCCESS
+    GET_ALL_COMPLAINT_SUCCESS,
+    DELETE_COMPLAINT_STARTED,
+    DELETE_COMPLAINT_SUCCESS,
+    DELETE_COMPLAINT_FAILED
 }from '../config/config.constants'
 
 let initialState ={
@@ -59,21 +62,28 @@ export const complaintReducer = (state=initialState,action) => {
             }
         }
         case CHANGE_COMPLAINT_SUCCESS:{
-            let newComplaints = state.complaints;
-            let removePost= find(newComplaints, function(complaint) { return complaint._id == action.changedComplaint[0]._id; });
-            let indexOf_removePost = newComplaints.indexOf(removePost);
-            if(action.changedComplaint[0].status === 'resolve')
-            newComplaints[indexOf_removePost].status = 'resolve';
-            else
-            {
-                 newComplaints = state.buzz.filter(function (obj) {
-                    return obj._id !== action.changedComplaint[0]._id;
+            console.log(action.changedComplaint[0],state.complaints,"<<<<<<<<<<<<<<<<<<<<<");
+            let newComplaints =state.complaints;
+            if(action.changedComplaint[0].status === 'close'){
+                newComplaints = state.complaints.filter(function (obj) {
+                    return obj._id !== action.deletedComplaint[0]._id
                 })
+
+            }else{
+               newComplaints.map((items) => {
+                    if(items._id === action.changedComplaint[0]._id){
+                       console.log("object whose status is to be chaged is",items);
+                       items.status='resolve'
+                    }
+                });
+
             }
+            console.log(newComplaints,"<<<<<<<<<<<newcomp<<<<<<<<<<<<<<<<<<")
             return{
                 ...state,
-                complaints:newComplaints
+
             }
+
         }
         case CHANGE_COMPLAINT_FAILED:{
             return{
@@ -84,6 +94,39 @@ export const complaintReducer = (state=initialState,action) => {
             return{
                 ...state,
                 myComplaints:action.allcomplaints
+            }
+        }
+        case DELETE_COMPLAINT_STARTED:{
+            console.log("started>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            return{
+                ...state
+            }
+        }
+        case DELETE_COMPLAINT_SUCCESS:{
+            console.log("---------------in complaint reducer document deleted is----------",action.deletedComplaint);
+            let id = action.deletedComplaint[0]._id;
+            let newMyComplaints;
+            let adminComplaints
+            newMyComplaints = state.myComplaints.filter(function(el) {
+                return el._id !== id;
+            });
+
+            console.log('my complaints----------------------------',state.myComplaints);
+          console.log('new complaints----------------------------',newMyComplaints);
+         adminComplaints = state.complaints.filter(function (obj) {
+              return obj._id !== action.deletedComplaint[0]._id
+               });
+            return{
+                ...state,
+                myComplaints:newMyComplaints,
+                complaints:adminComplaints
+            }
+        }
+        case DELETE_COMPLAINT_FAILED:{
+            console.log("error >>_____________")
+            return{
+                ...state,
+                err:action.err
             }
         }
     }

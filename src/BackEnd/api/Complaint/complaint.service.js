@@ -23,7 +23,6 @@ exports.getComplaints = (email,res) => {
 };
 
 exports.changeStatus = (statusData,res) => {
-
     if(statusData.status === 'close'){
         Complaint.find({_id: statusData.id}, (err, data) => {
             if (err)
@@ -33,6 +32,7 @@ exports.changeStatus = (statusData,res) => {
                     if (err)
                         res.send(err);
                     else{
+                        console.log(data,">>>>>>>>>>>>>>>>>>>>>")
                         res.send(data);
                     }
 
@@ -40,19 +40,19 @@ exports.changeStatus = (statusData,res) => {
             }
         });
     }else{
-       console.log("status in service is resolving");
+        console.log("status in service is resolving");
         Complaint.update({_id:statusData.id},{$set:{status:'resolve'}},(err,data) => {
             if(err)
                 res.send(err);
             else {
                 console.log("status is updated",data);
                 Complaint.find({_id: statusData.id}, (err, data) => {
-                    console.log("document updated is", data);
+                    console.log("document updated is------------------------", data);
                     res.send(data);
                 })
             }
        })
-     }
+    }
 };
 
 exports.getUserSpecificComplaint =(email,res) => {
@@ -62,4 +62,23 @@ exports.getUserSpecificComplaint =(email,res) => {
         else
             res.send(data);
     })
-}
+};
+
+exports.deleteComplaint = (id,res) => {
+    console.log("-----------------document to be deleted in service is--------------",id);
+    Complaint.find({_id:id},(err,data)=>{
+        if(err)
+            res.send(err);
+        else{
+            Complaint.remove({_id:id},(err,removedData)=>{
+                if(err)
+                    res.send(err);
+                else {
+                    console.log("----------------deleted document is-------------", data);
+                    res.send(data);
+                }
+            })
+        }
+    });
+
+};

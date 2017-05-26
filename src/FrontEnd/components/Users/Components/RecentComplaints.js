@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import get from 'lodash/get';
 
 import '../../../assets/styling/RecentBuzz.css'
-import {asyncGetMyComplaints} from '../../../actions'
+import {asyncGetMyComplaints,asyncDeleteComplaint} from '../../../actions'
 
 export default class RecentComplaints extends Component{
     constructor(props){
@@ -14,6 +14,15 @@ export default class RecentComplaints extends Component{
         // console.log('component will mount will calll ----------',this.props);
         this.props.ReduxProps.dispatch(asyncGetMyComplaints());
     }
+
+    deleteComplaint = (event,id) =>{
+        event.preventDefault();
+        console.log("complaint to be deleted is :",id);
+        var ob ={
+            complaintid:id,
+        }
+        this.props.ReduxProps.dispatch(asyncDeleteComplaint(ob));
+    };
 
     render(){
         let complaints = this.props.ReduxProps.complaintReducer.myComplaints;
@@ -36,6 +45,7 @@ export default class RecentComplaints extends Component{
                             <td> {items.assignee_email} </td>
                             <td> {items.content} </td>
                             <td> {items.status} </td>
+                            <td> <button onClick={ (e) => this.deleteComplaint(e, items._id) }>Delete</button> </td>
                         </tr>
                         ))}
                     </tbody>

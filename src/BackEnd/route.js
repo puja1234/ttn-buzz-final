@@ -49,6 +49,7 @@ module.exports = (app) => {
     app.get('/api/complaint',complaint_controller.getComplaint);
     app.put('/api/changeStatus',complaint_controller.changeStatus);
     app.get('/api/myComplaint',complaint_controller.getUserSpecificComplaint);
+    app.delete('/api/deleteComplaint',complaint_controller.deleteComplaint);
 
     app.get("/api/logout",isAuthenticated,function (req,res) {
         req.session.destroy(function() {

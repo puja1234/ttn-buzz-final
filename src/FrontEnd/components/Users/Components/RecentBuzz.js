@@ -164,6 +164,7 @@ export default class RecentBuzz extends Component{
                             </div>
                         </div>
                                 <div >
+                                    <img className="comments-image" src={`/${require('../../../assets/images/comments.jpg')}`}/>
                                     {commentsState ?
                                         <div>
                                             {commentsState.map((comment_item) => {

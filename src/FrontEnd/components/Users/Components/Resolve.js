@@ -11,21 +11,21 @@ export default class Resolve extends Component {
     }
 
     componentDidMount(){
-        const email = get(this.props.ReduxProps.userFetch, 'users.email');
-        this.props.ReduxProps.dispatch(asyncGetComplaints(email));
+
+        this.props.ReduxProps.dispatch(asyncGetComplaints());
     }
 
     changeStatus = (e,id) => {
-        const email = get(this.props.ReduxProps.userFetch, 'users.email');
+
         this.setState({status:e.target.value},()=>{
-            console.log("&&&&&&&&&&&&&&&&&&&&&&&",this.state.status);
-            this.props.ReduxProps.dispatch(asyncUpdateStatus(id,this.state.status,email));
+
+            this.props.ReduxProps.dispatch(asyncUpdateStatus(id,this.state.status));
         });
     };
 
     render(){
         let complaints = this.props.ReduxProps.complaintReducer.complaints;
-        console.log("complaints received in resolver are",complaints);
+        console.log("complaints received in resolver are******************",complaints);
         return(
             <div>{complaints.length ?
                 <table className="table">

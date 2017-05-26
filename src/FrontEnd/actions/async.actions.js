@@ -32,7 +32,10 @@ import {
     changeStatusStarted,
     changeStatusSuccess,
     changeStatusFailed,
-    myComplaintGetSuccess
+    myComplaintGetSuccess,
+    deleteComplaintStarted,
+    deleteComplaintSuccess,
+    deleteComplaintFailed
 }from './app.actions'
 
 import fetch from 'isomorphic-fetch';
@@ -257,8 +260,8 @@ export const asyncPostComplaint = (complaint) => {
             .then(response => response.json())
             .then(data => {
                 dispatch(complaintSuccess(data));
-                dispatch(asyncGetMyComplaints(complaint.complaint_by));
-                dispatch(asyncGetComplaints(complaint.assignee_email));
+                dispatch(asyncGetMyComplaints());
+                dispatch(asyncGetComplaints());
             })
             .catch(err => {
                 dispatch(complaintFailed(err))
@@ -266,11 +269,11 @@ export const asyncPostComplaint = (complaint) => {
     }
 };
 
-export const asyncGetComplaints = (email) => {
-    console.log("email in asyncGetComplaints",email);
+export const asyncGetComplaints = () => {
+
     return (dispatch) => {
         dispatch(complaintGetStarted());
-        fetch(`http://localhost:3000/api/complaint?email=${email}`,{
+        fetch('http://localhost:3000/api/complaint',{
             credentials: 'include',
             method: 'get',
 
@@ -285,12 +288,12 @@ export const asyncGetComplaints = (email) => {
     }
 };
 
-export const asyncUpdateStatus = (id,status,email) => {
-    console.log("complaint to be updated is ",id,"with status",status);
+export const asyncUpdateStatus = (id,status) => {
+
     let statusData = {
         id:id,
         status:status
-    }
+    };
     return (dispatch) => {
         dispatch(changeStatusStarted());
         fetch('http://localhost:3000/api/changeStatus',{
@@ -305,7 +308,7 @@ export const asyncUpdateStatus = (id,status,email) => {
             .then(response => response.json())
             .then((data) => {
                 dispatch(changeStatusSuccess(data));
-                dispatch(asyncGetComplaints(email))
+                dispatch(asyncGetComplaints())
             })
             .catch(err => {
                 dispatch(changeStatusFailed(err));
@@ -313,10 +316,10 @@ export const asyncUpdateStatus = (id,status,email) => {
     }
 };
 
-export const asyncGetMyComplaints =(email) => {
+export const asyncGetMyComplaints =() => {
     return (dispatch) => {
         dispatch(complaintGetStarted());
-        fetch(`http://localhost:3000/api/myComplaint?email=${email}`,{
+        fetch('http://localhost:3000/api/myComplaint',{
             credentials: 'include',
             method: 'get',
         })
@@ -327,5 +330,30 @@ export const asyncGetMyComplaints =(email) => {
             .catch(err => {
                 dispatch(complaintGetFailed(err))
             })
+    }
+};
+
+export const asyncDeleteComplaint = (id) => {
+    console.log("id to be deleted is ,",id);
+    return (dispatch) => {
+        dispatch(deleteComplaintStarted());
+        fetch('http://localhost:3000/api/deleteComplaint', {
+            credentials: 'include',
+            method: 'delete',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(id)
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(deleteComplaintSuccess(data));
+
+            })
+            .catch(err => {
+                dispatch(deleteComplaintFailed(err))
+            })
+
     }
 };

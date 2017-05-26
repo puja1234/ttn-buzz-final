@@ -412,7 +412,8 @@ form {
     left: 4px;
     opacity: 0;
     position: absolute;
-    width: 48px;
+    width: 61px;
+    margin: -50px
 }
 
 .uploadImage {

@@ -7,21 +7,24 @@ exports.createComplaint =(req,res) => { //create new post in db
 };
 
 exports.getComplaint = (req,res) => {
-    let email = req.param('email');
+    let email = req.user.email;
     console.log("email in complaint controller received is ",email);
     complaintService.getComplaints(email,res);
 };
 
 exports.changeStatus = (req,res) => {
     let statusData = req.body.statusData;
-    console.log('______________________________ in complaint controller',statusData);
-    complaintService.changeStatus(statusData,res);
+    complaintService.changeStatus(statusData, res);
 };
 
 exports.getUserSpecificComplaint = (req,res) => {
-    let email = req.param('email');
-    console.log(req.user,'-------------in controller-----------');
-    complaintService.getUserSpecificComplaint(email,res);
-}
+    console.log(req.user.email,'-------------in controller-----------');
+    complaintService.getUserSpecificComplaint(req.user.email,res);
+};
 
-
+exports.deleteComplaint = (req,res) => {
+    console.log("*********************************************");
+    let id = req.body;
+    console.log("in controller of delete id to be deleted is",id);
+    complaintService.deleteComplaint(id.complaintid,res);
+};
