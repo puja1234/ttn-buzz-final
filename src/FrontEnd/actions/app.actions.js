@@ -22,7 +22,17 @@ import {
     DELETE_POST_FAILED,
     DELETE_COMMENT_STARTED,
     DELETE_COMMENT_SUCCESS,
-    DELETE_COMMENT_FAILED
+    DELETE_COMMENT_FAILED,
+    GET_COMPLAINT_STARTED,
+    GET_COMPLAINT_SUCCESS,
+    GET_COMPLAINT_FAILED,
+    POST_COMPLAINT_STARTED,
+    POST_COMPLAINT_SUCCESS,
+    POST_COMPLAINT_FAILED,
+    CHANGE_COMPLAINT_STARTED,
+    CHANGE_COMPLAINT_SUCCESS,
+    CHANGE_COMPLAINT_FAILED,
+    GET_ALL_COMPLAINT_SUCCESS
 } from './../config/config.constants'
 
 export function apiCallStarted() {
@@ -43,7 +53,7 @@ export function postBuzzCallStarted() {
 }
 
 export function postBuzzCallSuccess(postBuzz) {
-    return { type:POST_BUZZ_SUCCESS,postBuzz };
+    return { type:POST_BUZZ_SUCCESS ,postBuzz};
 }
 
 export function postBuzzCallFailed(err) {
@@ -102,8 +112,8 @@ export function deletePostStarted() {
     return { type:DELETE_POST_STARTED }
 }
 
-export function deletePostSuccess() {
-    return { type:DELETE_POST_SUCCESS }
+export function deletePostSuccess(deletedPost) {
+    return { type:DELETE_POST_SUCCESS,deletedPost }
 }
 
 export function deletePostFailed(err) {
@@ -122,5 +132,44 @@ export function deleteCommentFailed(err) {
     return { type:DELETE_COMMENT_FAILED,err }
 }
 
+export function complaintStarted() {
+    return { type:POST_COMPLAINT_STARTED }
+}
+
+export function complaintSuccess() {
+    return { type:POST_COMPLAINT_SUCCESS }
+}
+
+export function complaintFailed(err) {
+    return { type:POST_COMPLAINT_FAILED,err }
+}
+
+export function complaintGetStarted() {
+    return { type:GET_COMPLAINT_STARTED }
+}
+
+export function complaintGetSuccess(getComplaint) {
+    return { type:GET_COMPLAINT_SUCCESS,getComplaint }
+}
+
+export function complaintGetFailed(err) {
+    return  { type:GET_COMPLAINT_FAILED,err }
+}
+
+export function changeStatusStarted() {
+    return { type:CHANGE_COMPLAINT_STARTED }
+}
+
+export function changeStatusSuccess(changedComplaint) {
+    return { type:CHANGE_COMPLAINT_SUCCESS,changedComplaint }
+}
+
+export function changeStatusFailed(err) {
+    return { type:CHANGE_COMPLAINT_FAILED,err }
+}
+
+export function myComplaintGetSuccess(allcomplaints) {
+    return { type:GET_ALL_COMPLAINT_SUCCESS,allcomplaints }
+}
 
 

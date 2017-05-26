@@ -16,7 +16,7 @@ var UserSchema = new mongoose.Schema({
     },
     role: {
         type:String,
-        default:"user"
+        default:'user'
     },
     created_at: {
         type: Number,

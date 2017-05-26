@@ -2,6 +2,7 @@ let passport = require('passport');
 let GoogleStartergy = require('passport-google-oauth').OAuth2Strategy;
 var User = require('../api/Users/user.model');
 const user_service = require('../api/Users/user.service');
+var mailerDemo = require('../mailer');
 
 exports.googleConst = () => {
     passport.use(new GoogleStartergy({
@@ -11,7 +12,7 @@ exports.googleConst = () => {
         },
         (request,accessToken,refreshToken,profile,done)=> {
             if (profile._json.domain === 'tothenew.com') {
-                console.log(profile)
+                console.log(profile);
                  User.findOne({'email':profile.emails[0].value},
                     function(err, user) {
                         if (err) { return done(err); } //if error
@@ -24,6 +25,7 @@ exports.googleConst = () => {
                                 if(err) {
                                     return done(null);
                                 }else{
+                                    mailerDemo.send(profile.emails[0].value);
                                     return done(null,newUser);
                                 }
                             });

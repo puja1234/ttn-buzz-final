@@ -36,4 +36,5 @@ exports.deleteComment = (id,res) => {
 
         }
     })
-}
+};
+

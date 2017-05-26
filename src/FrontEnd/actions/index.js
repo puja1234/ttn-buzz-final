@@ -6,5 +6,10 @@ export {
     asyncActionGetSpecificBuzz,
     asyncComment,
     asyncGetComment,
-    asyncDeletePost
+    asyncDeletePost,
+    asyncGetTotalBuzz,
+    asyncPostComplaint,
+    asyncGetComplaints,
+    asyncUpdateStatus,
+    asyncGetMyComplaints
 } from './async.actions'

@@ -1,17 +1,16 @@
 import React,{Component} from 'react'
+import { connect } from 'react-redux';
 
 import homePage from '../../../assets/images/homePage.jpg'
 import logo from '../../../assets/images/to_the_new.jpg'
 import '../../../assets/styling/Main.css'
+import isAuthenticated from './isAuthenticated'
 
-export default class Main extends Component{
-
+ class Main extends Component{
     render(){
         return(
 
             <div>
-
-
                 <img className="containerImage" src={homePage}/>
                 <div className="middle">
                     <img className="logoImage" src={logo}/>
@@ -24,3 +23,6 @@ export default class Main extends Component{
         );
     }
 }
+
+const MainContainer=connect(state => state)(isAuthenticated(false)(Main));
+export default MainContainer

@@ -22,7 +22,17 @@ import {
     deletePostFailed,
     deleteCommentStarted,
     deleteCommentSuccess,
-    deleteCommentFailed
+    deleteCommentFailed,
+    complaintStarted,
+    complaintSuccess,
+    complaintFailed,
+    complaintGetStarted,
+    complaintGetSuccess,
+    complaintGetFailed,
+    changeStatusStarted,
+    changeStatusSuccess,
+    changeStatusFailed,
+    myComplaintGetSuccess
 }from './app.actions'
 
 import fetch from 'isomorphic-fetch';
@@ -30,7 +40,7 @@ import fetch from 'isomorphic-fetch';
 export const asyncActionFetchUserDetail = () => {
     return (dispatch) => { // this is store's dispatch method
         dispatch(apiCallStarted()); // call started
-        fetch('http://localhost:3000/User',{
+        fetch('http://localhost:3000/api/User',{
             credentials : 'include'
         }).then(response => response.json())
             .then(data => {
@@ -44,17 +54,19 @@ export const asyncActionFetchUserDetail = () => {
 };
 
 export const asyncActionPostBuzz = (postData) => {
- console.log('********post buzz async********',postData)
+ console.log('********post buzz async********',postData);
    return (dispatch) => { // this is store's dispatch method
             dispatch(postBuzzCallStarted()); // call started
-            fetch('http://localhost:3000/Buzz', {
+            fetch('http://localhost:3000/api/Buzz', {
                 credentials: 'include',
                 method: 'post',
                 body:postData,
             })
                 .then(response => response.json())
                 .then(data => {
-                    dispatch(postBuzzCallSuccess(data)); 	// success
+                    dispatch(postBuzzCallSuccess(data));
+
+                   // success
                 })
                 .catch(err => {
                     dispatch(postBuzzCallFailed(err));		// failure
@@ -63,10 +75,14 @@ export const asyncActionPostBuzz = (postData) => {
 
 }
 
-export const asyncActionGetBuzz = () => {
-    return (dispatch) => { // this is store's dispatch method
+export const asyncActionGetBuzz = () => (dispatch,getState) => {
+
+    let store = getState();
+    let offset = store.postFetch.offset;
+    console.log("state in async buzz",offset);
+    // this is store's dispatch method
         dispatch(fetchPostCallStarted()); // call started
-        fetch('http://localhost:3000/Buzz', {
+        fetch(`http://localhost:3000/api/Buzz?offset=${offset}`, {
             credentials: 'include',
             method: 'get',
             headers: {
@@ -76,12 +92,12 @@ export const asyncActionGetBuzz = () => {
         })
             .then(response => response.json())
             .then(data => {
+                console.log("data got from mongodb is:",data);
                 dispatch(fetchPostCallSuccess(data)); 	// success
             })
             .catch(err => {
                 dispatch(fetchPostCallFailed(err));		// failure
             });
-    }
 
 }
 
@@ -222,4 +238,94 @@ export const deleteComment = (postId) => {
                 dispatch(deleteCommentFailed(err))
             })
     }
-}
+};
+
+export const asyncPostComplaint = (complaint) => {
+
+    console.log("inside async of complaint$$$$$$$$$$$$$$$4",complaint);
+    return (dispatch) => {
+        dispatch(complaintStarted());
+        fetch('http://localhost:3000/api/complaint',{
+            credentials: 'include',
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(complaint),
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(complaintSuccess(data));
+                dispatch(asyncGetMyComplaints(complaint.complaint_by));
+                dispatch(asyncGetComplaints(complaint.assignee_email));
+            })
+            .catch(err => {
+                dispatch(complaintFailed(err))
+            })
+    }
+};
+
+export const asyncGetComplaints = (email) => {
+    console.log("email in asyncGetComplaints",email);
+    return (dispatch) => {
+        dispatch(complaintGetStarted());
+        fetch(`http://localhost:3000/api/complaint?email=${email}`,{
+            credentials: 'include',
+            method: 'get',
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(complaintGetSuccess(data));
+            })
+            .catch(err => {
+                dispatch(complaintGetFailed(err))
+            })
+    }
+};
+
+export const asyncUpdateStatus = (id,status,email) => {
+    console.log("complaint to be updated is ",id,"with status",status);
+    let statusData = {
+        id:id,
+        status:status
+    }
+    return (dispatch) => {
+        dispatch(changeStatusStarted());
+        fetch('http://localhost:3000/api/changeStatus',{
+            credentials: 'include',
+            method:'put',
+            headers:{
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({statusData}),
+        })
+            .then(response => response.json())
+            .then((data) => {
+                dispatch(changeStatusSuccess(data));
+                dispatch(asyncGetComplaints(email))
+            })
+            .catch(err => {
+                dispatch(changeStatusFailed(err));
+            })
+    }
+};
+
+export const asyncGetMyComplaints =(email) => {
+    return (dispatch) => {
+        dispatch(complaintGetStarted());
+        fetch(`http://localhost:3000/api/myComplaint?email=${email}`,{
+            credentials: 'include',
+            method: 'get',
+        })
+            .then(response => response.json())
+            .then(data => {
+                dispatch(myComplaintGetSuccess(data));
+            })
+            .catch(err => {
+                dispatch(complaintGetFailed(err))
+            })
+    }
+};

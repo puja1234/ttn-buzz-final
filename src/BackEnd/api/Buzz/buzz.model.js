@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 
-var categoryTypes = ['Lost and Found','Activity']
+var categoryTypes = ['Lost and Found','Activity'];
 
 var BuzzSchema = new mongoose.Schema({
     category:{

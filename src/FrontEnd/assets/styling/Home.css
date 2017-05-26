@@ -402,3 +402,19 @@ form {
     margin-left: 10%;
 
 }
+.camera {
+    width: 30%;
+    margin-top: -6%;
+}
+
+.cameraInput{
+    height: 34px;
+    left: 4px;
+    opacity: 0;
+    position: absolute;
+    width: 48px;
+}
+
+.uploadImage {
+    position: relative;
+}

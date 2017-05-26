@@ -9,10 +9,11 @@ exports.create = (req, res)=> {
 
 exports.getComments = (req,res) => {
     commentService.getComments(res);
-}
+};
 
 exports.deleteComment = (req,res) => {
     let id = req.body.postId;
     commentService.deleteComment(id,res);
-}
+};
+
 

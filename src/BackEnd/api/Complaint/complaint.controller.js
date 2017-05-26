@@ -1,15 +1,27 @@
-//get list of complains
+let complaintService = require('./complaint.service');
 
-//get single Complain
+exports.createComplaint =(req,res) => { //create new post in db
+    let complaintData = req.body;
+    console.log("Creating complaint in  complaint controller",complaintData);
+    complaintService.createComplaint(complaintData,res);
+};
 
-//get Complain by category
+exports.getComplaint = (req,res) => {
+    let email = req.param('email');
+    console.log("email in complaint controller received is ",email);
+    complaintService.getComplaints(email,res);
+};
 
-//create new Complain in db
+exports.changeStatus = (req,res) => {
+    let statusData = req.body.statusData;
+    console.log('______________________________ in complaint controller',statusData);
+    complaintService.changeStatus(statusData,res);
+};
 
-//update existing Complain in db
-
-//delete Complaint from db
-
-//view status of Complaint
+exports.getUserSpecificComplaint = (req,res) => {
+    let email = req.param('email');
+    console.log(req.user,'-------------in controller-----------');
+    complaintService.getUserSpecificComplaint(email,res);
+}
 
 

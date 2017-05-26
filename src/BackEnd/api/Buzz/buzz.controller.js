@@ -1,8 +1,16 @@
 var PostService = require('./buzz.service')
 
+
+
 exports.getPost = (req,res,next) => { //get list of posts
-    console.log("getting all posts");
-    PostService.getPosts(res);
+    let offset = parseInt(req.param('offset'));
+    console.log('wyeqwetrqywe',offset);
+    //let limits = parseInt(req.param('limits'));
+
+   console.log("getting all posts controller skip",offset);
+ //  console.log("getting all posts controller limit",limits);
+   PostService.getPosts(offset,2,res);
+
 }
 //get user specicfic post
 exports.getSpecificPost = (req,res,next) => { //get list of posts
@@ -13,7 +21,7 @@ exports.getSpecificPost = (req,res,next) => { //get list of posts
 //get post by category
 
 
-exports.createPost =(req,res,next) => { //create new post in db
+exports.createPost =(req,res) => { //create new post in db
     let buzz = JSON.parse(req.body.buzzdata);
    console.log("req>>>>>>>>>>>>>>>>>>>",buzz, req.file);
 
@@ -48,5 +56,10 @@ exports.updateLikes = (req,res,next) => {  //update post specicif like
     let userEmail = likeData.user_email;
     let category = likeData.choice;
     PostService.updateLikes(buzzId,userEmail,category,res);
+};
+
+exports.getTotal = (req,res,next) => {
+    console.log("getting total buzzes");
+    PostService.getTotal(res);
 }
 

@@ -1,9 +1,8 @@
 'use strict'
 var mongoose = require('mongoose')
-Schema = mongoose.Schema;
 
-var ComplaintSchema = Schema({
-    type:String,
+var ComplaintSchema = new mongoose.Schema({
+    complaint_type:String,
     content:String,
     createdAt:Date,
     updatedAt:Date,
@@ -11,14 +10,8 @@ var ComplaintSchema = Schema({
         type:String,
         default:'pending'
     },
-    user:{
-        userId:String,
-        name:String
-    },
-    assignee:{
-        userId:String,
-        name:String
-    }
+    complaint_by:String,
+    assignee_email:String
 })
 
-model.exports = mongoose.model('Complaint',ComplaintSchema);
+module.exports = mongoose.model('Complaint',ComplaintSchema);

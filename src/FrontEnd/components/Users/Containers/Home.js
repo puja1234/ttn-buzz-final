@@ -1,14 +1,17 @@
 import React,{Component} from 'react'
 import get from 'lodash/get';
+import {BrowserRouter as Router , Link ,Route} from 'react-router-dom'
 import { connect } from 'react-redux';
+import {Switch} from 'react-router-dom'
 
-import logo from'../../../assets/images/to_the_new.jpg'
-import buzzBanner from'../../../assets/images/BuzzHeader.jpg'
-import '../../../assets/styling/Home.css'
-import Complaints from '../Components/Complaints'
+
+import '../../../assets/styling/Home.css';
+import Activity from '../Components/Activity'
 import Buzz from '../Components/Buzz'
-import RecentBuzz from '../Components/RecentBuzz'
+import LostAndFound from '../Components/LostAndFound'
+import Complaints from '../Components/Complaints'
 import isAuthenticated from '../Components/isAuthenticated';
+import Resolve from '../Components/Resolve'
 
 class Home extends Component{
     constructor(){
@@ -56,14 +59,15 @@ class Home extends Component{
     }
 
     render(){
-
+        console.log('--------home container -------',this.props);
         const email = get(this.props.userFetch, 'users.email');
+        const role=get(this.props.userFetch, 'users.role');
         const image = get(this.props.userFetch, 'users.imageURL');
-        //console.log(email, image);
+        console.log(this.props.postFetch.buzz,"props in home received*********************");
         return(
             <div className="buzz-container">
                 <header className="my-container">
-                    <img src={logo} alt="" className="logo"/>
+                    <img src={`/${require('../../../assets/images/to_the_new.jpg')}`} alt="" className="logo"/>
                 <ul id="topMostNavBar">
                     <li> <a href="/api/logout" className="logout"> </a> </li>
                     <li> {email} </li>
@@ -71,30 +75,38 @@ class Home extends Component{
                 </ul>
 
                 <ul className="second-menu">
-                    <li> <a onClick={this.showBuzzComponent.bind(this)}> Home</a> </li>
-                    <li> <a onClick={this.showComplaintComponent.bind(this)} > Complaint</a> </li>
-                    <li> <a onClick={this.showActivity.bind(this)}> Activity</a> </li>
-                    <li> <a onClick={this.showLostFound.bind(this)}> Lost and Found</a> </li>
+
+                    <li> <Link to="/home" >Home </Link></li>
+                    <li> <Link to='/home/activity'> Activity </Link> </li>
+                    <li> <Link to='/home/lostAndFound'> Lost and Found </Link> </li>
+                    <li> <Link to='/home/complaints'> Complaints </Link> </li>
+                    { role === 'admin' ?
+                        <li> <Link to="/home/resolve" >Resolve </Link></li>:<li></li>}
                 </ul>
 
                     <hr/>
-                    <img src={buzzBanner} alt="" className="banner"/>
+                    <img src={`/${require('../../../assets/images/BuzzHeader.jpg')}`} alt="" className="banner"/>
                     <div className="textOnBanner">
                         <p>CREATING BUZZ AROUND YOU</p>
                         <p>NEVER BEEN SO EASY..</p>
                     </div>
                 </header>
 
-                {
-                    this.state.showBuzz ?
-                        <div className="buzz-wrapper">
-                            <Buzz ReduxProps={this.props}/>
-                            <RecentBuzz ReduxProps={this.props}/>
-                        </div>
-                        :
+                {/*<div className="buzz-wrapper">
+                    <Buzz ReduxProps={this.props}/>
+                </div>*/}
 
-                            <Complaints/>
-                }
+
+
+                  <Switch>
+                      <Route exact path='/home' render={props=> <Buzz{...props} ReduxProps = {this.props}/>} />
+                      <Route exact path='/home/Activity' render={props => <Activity {...props} ReduxProps = {this.props}/>}/>
+                      <Route exact path='/home/lostAndFound' render={props=> <LostAndFound {...props} ReduxProps = {this.props}/>} />
+                      <Route exact path='/home/complaints' render={props=> <Complaints {...props} ReduxProps = {this.props}/>}/>
+                      <Route exact path='/home/resolve' render={props=> <Resolve {...props} ReduxProps = {this.props}/>}/>
+                      <Route path ='/*' render={props=> <Buzz{...props} ReduxProps = {this.props}/>}/>
+                  </Switch>
+
 
             <footer className="my-container">
                 <p className="copyright"> @copyright, To The New 2017</p>
@@ -105,5 +117,5 @@ class Home extends Component{
     }
 }
 
-const HomeContainer=connect(state => state)(isAuthenticated(Home));
+const HomeContainer=connect(state => state)(isAuthenticated(true)(Home));
 export default HomeContainer
