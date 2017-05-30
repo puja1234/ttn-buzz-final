@@ -19,7 +19,6 @@ let initialState = {
 export const commentReducer = (state=initialState,action) => {
     switch (action.type) {
         case COMMENT_POST_STARTED : {
-            console.log("comment post started");
             return{
                 loading:true,
                 ...state
@@ -31,7 +30,6 @@ export const commentReducer = (state=initialState,action) => {
             }
         }
         case COMMENT_POST_FAILED : {
-            console.log("Comment post failed");
             return{
                 loading:false,
                 err:action.err,

@@ -7,10 +7,12 @@ exports.create = (req, res)=> {
     commentService.create(commentData,res);
 };
 
+//getting comments
 exports.getComments = (req,res) => {
     commentService.getComments(res);
 };
 
+//delete comments
 exports.deleteComment = (req,res) => {
     let id = req.body.postId;
     commentService.deleteComment(id,res);

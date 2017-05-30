@@ -8,20 +8,18 @@ const initialState ={
     users:null,
     loading:true,
     err:null
-}
+};
 
 export const userFetch = (state=initialState,action) => {
-
     switch (action.type) {
         case FETCH_USER_STARTED: {
-            console.log("fetch user started in reducer")
             return {
                 ...state,
             }
         }
 
         case FETCH_USER_SUCCESS: {
-            console.log("fetch user success in reducer", action.user)
+            console.log("---------------",action.user);
             return {
                 ...state,
                 loading: false,
@@ -30,7 +28,6 @@ export const userFetch = (state=initialState,action) => {
         }
 
         case FETCH_USER_FAILED: {
-            console.log("fetch user error in reducer")
             return {
                 ...state,
                 loading: false,
@@ -40,4 +37,4 @@ export const userFetch = (state=initialState,action) => {
         }
     }
     return state
-}
+};

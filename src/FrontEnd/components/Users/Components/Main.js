@@ -6,7 +6,7 @@ import logo from '../../../assets/images/to_the_new.jpg'
 import '../../../assets/styling/Main.css'
 import isAuthenticated from './isAuthenticated'
 
- class Main extends Component{
+  class Main extends Component{
     render(){
         return(
 
@@ -24,5 +24,8 @@ import isAuthenticated from './isAuthenticated'
     }
 }
 
-const MainContainer=connect(state => state)(isAuthenticated(false)(Main));
+
+const MainContainer=connect(state=>state)(isAuthenticated(false)(Main));
 export default MainContainer
+
+

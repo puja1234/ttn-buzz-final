@@ -9,18 +9,16 @@ export default class RecentComplaints extends Component{
         super(props);
     }
 
-    componentWillMount(){
-        // const email = get(this.props.ReduxProps.userFetch, 'users.email');
-        // console.log('component will mount will calll ----------',this.props);
+    componentDidMount(){
         this.props.ReduxProps.dispatch(asyncGetMyComplaints());
     }
 
     deleteComplaint = (event,id) =>{
         event.preventDefault();
         console.log("complaint to be deleted is :",id);
-        var ob ={
+        let ob ={
             complaintid:id,
-        }
+        };
         this.props.ReduxProps.dispatch(asyncDeleteComplaint(ob));
     };
 

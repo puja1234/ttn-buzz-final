@@ -62,23 +62,19 @@ export const complaintReducer = (state=initialState,action) => {
             }
         }
         case CHANGE_COMPLAINT_SUCCESS:{
-            console.log(action.changedComplaint[0],state.complaints,"<<<<<<<<<<<<<<<<<<<<<");
             let newComplaints =state.complaints;
-            if(action.changedComplaint[0].status === 'close'){
+            if(action.changedComplaint[0].status === 'close'){    //if complaint status is clode then delete that complaint from complaint array
                 newComplaints = state.complaints.filter(function (obj) {
                     return obj._id !== action.deletedComplaint[0]._id
                 })
 
             }else{
-               newComplaints.map((items) => {
+               newComplaints.map((items) => {  //if complaint status is resolve then change status in state
                     if(items._id === action.changedComplaint[0]._id){
-                       console.log("object whose status is to be chaged is",items);
-                       items.status='resolve'
+                        items.status='resolve'
                     }
                 });
-
             }
-            console.log(newComplaints,"<<<<<<<<<<<newcomp<<<<<<<<<<<<<<<<<<")
             return{
                 ...state,
 
@@ -97,25 +93,21 @@ export const complaintReducer = (state=initialState,action) => {
             }
         }
         case DELETE_COMPLAINT_STARTED:{
-            console.log("started>>>>>>>>>>>>>>>>>>>>>>>>>>")
             return{
                 ...state
             }
         }
         case DELETE_COMPLAINT_SUCCESS:{
-            console.log("---------------in complaint reducer document deleted is----------",action.deletedComplaint);
             let id = action.deletedComplaint[0]._id;
             let newMyComplaints;
             let adminComplaints
-            newMyComplaints = state.myComplaints.filter(function(el) {
+            newMyComplaints = state.myComplaints.filter(function(el) { //delete my complaint
                 return el._id !== id;
             });
 
-            console.log('my complaints----------------------------',state.myComplaints);
-          console.log('new complaints----------------------------',newMyComplaints);
-         adminComplaints = state.complaints.filter(function (obj) {
+            adminComplaints = state.complaints.filter(function (obj) { //delete complaint from admin state
               return obj._id !== action.deletedComplaint[0]._id
-               });
+            });
             return{
                 ...state,
                 myComplaints:newMyComplaints,
@@ -123,7 +115,6 @@ export const complaintReducer = (state=initialState,action) => {
             }
         }
         case DELETE_COMPLAINT_FAILED:{
-            console.log("error >>_____________")
             return{
                 ...state,
                 err:action.err

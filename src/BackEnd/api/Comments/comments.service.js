@@ -1,18 +1,16 @@
-var Comment = require('./comments.model');
+const Comment = require('./comments.model');
 
+//create comment
 exports.create = (commentData,res) => {
     Comment.create(commentData,(err,data) => {
-        if(err){
+        if(err)
             res.send("error occured in creating post");
-        }
-
-        if(data){
+        else
             res.send(data);
-        }
     })
-
 };
 
+//getting comments
 exports.getComments = (res) => {
     Comment.find({},(err,data)=>{
         if(err)
@@ -22,10 +20,11 @@ exports.getComments = (res) => {
     })
 };
 
+//delete comments
 exports.deleteComment = (id,res) => {
     Comment.remove({postId:id} , (err,data) => {
         if(err)
-            res.send(err)
+            res.send(err);
         else{
             Comment.find({}, (err,data) => {
                 if(err)
@@ -33,7 +32,6 @@ exports.deleteComment = (id,res) => {
                 else
                     res.send(data)
             })
-
         }
     })
 };

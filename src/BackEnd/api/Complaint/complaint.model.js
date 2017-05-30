@@ -1,7 +1,7 @@
-'use strict'
-var mongoose = require('mongoose')
+'use strict';
+let mongoose = require('mongoose');
 
-var ComplaintSchema = new mongoose.Schema({
+let ComplaintSchema = new mongoose.Schema({
     complaint_type:String,
     content:String,
     createdAt:Date,
@@ -10,8 +10,14 @@ var ComplaintSchema = new mongoose.Schema({
         type:String,
         default:'pending'
     },
-    complaint_by:String,
-    assignee_email:String
-})
+    complaint_by:{
+        type:String,
+        index:true
+    },
+    assignee_email:{
+        type:String,
+        index:true
+    }
+});
 
 module.exports = mongoose.model('Complaint',ComplaintSchema);

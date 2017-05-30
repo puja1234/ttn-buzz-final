@@ -1,6 +1,5 @@
 import React,{Component} from 'react'
-import get from 'lodash/get'
-import {asyncGetComplaints,asyncUpdateStatus} from '../../../actions'
+import {asyncGetComplaints,asyncUpdateStatus} from '../../actions'
 
 export default class Resolve extends Component {
     constructor(props){
@@ -11,21 +10,17 @@ export default class Resolve extends Component {
     }
 
     componentDidMount(){
-
         this.props.ReduxProps.dispatch(asyncGetComplaints());
     }
 
     changeStatus = (e,id) => {
-
         this.setState({status:e.target.value},()=>{
-
             this.props.ReduxProps.dispatch(asyncUpdateStatus(id,this.state.status));
         });
     };
 
     render(){
         let complaints = this.props.ReduxProps.complaintReducer.complaints;
-        console.log("complaints received in resolver are******************",complaints);
         return(
             <div>{complaints.length ?
                 <table className="table">

@@ -3,7 +3,6 @@ import get from 'lodash/get';
 
 import '../../../assets/styling/Home.css'
 import {asyncActionPostBuzz} from '../../../actions'
-import upload from '../../../assets/images/upload.png'
 import RecentBuzz from './RecentBuzz'
 
 export default class Buzz extends Component{
@@ -14,12 +13,12 @@ export default class Buzz extends Component{
 
             },
             buzz:'',
-            image:'',
+            image:[],
             actionType:'Activity',
             posted_by:'',
             posted_by_image:'',
             err:'',
-            imagePreviewUrl:''
+            imagePreviewUrl:[]
         }
     }
 
@@ -42,21 +41,23 @@ export default class Buzz extends Component{
         }else {
             const email = get(this.props.ReduxProps.userFetch, 'users.email');
             const image = get(this.props.ReduxProps.userFetch, 'users.imageURL');
-            var newData = {
+           let newData = {
                 buzz: this.state.buzz,
                 actionType: this.state.actionType,
                 posted_by: email,
                 posted_by_image: image,
-            }
+            };
             let formData = new FormData();
-            var data = JSON.stringify(newData)
-            formData.append('buzzdata', data)
-            formData.append("image", this.state.image);
+            let data = JSON.stringify(newData);
+            formData.append('buzzdata', data);
+
+            for(let i=0;i<this.state.image.length; i++){
+                formData.append("image", this.state.image[i]);
+            }
+
             this.setState({
                 postData: newData,
-                err:'',
                 buzz: '',
-                image: '',
                 imagePreviewUrl:'',
                 err:'See activities'
             }, function () {
@@ -68,42 +69,40 @@ export default class Buzz extends Component{
 
 
     imageUpload = (event) => {
-        var fileName = event.target.files[0].name;
-        var extension = fileName.split('.').pop();
-        console.log(extension,'++++++++++++++++++++++')
+       if(event.target.files.length >3){
+           alert("Cannot upload more than 3 images!!!");
+       }
+        let fileName = event.target.files[0].name;
+        let extension = fileName.split('.').pop();
         if(extension == 'png' || extension=='jpg' || extension == 'jpeg' || extension == 'gif') {
-            this.setState({
-                image: event.target.files[0]
+            this.setState({image: event.target.files}, () => {
+                console.log("files", this.state.image);
             });
-
+            let numOfFiles = event.target.files.length;
+            const files = [];
             let reader = new FileReader();
-            let file = event.target.files[0];
+            let file = event.target.files;
 
             reader.onloadend = () => {
-                console.log('image in reader',reader.result)
+                console.log('image in reader',reader.result);
                 this.setState({
                     imagePreviewUrl: reader.result
                 }, function(){
                     console.log("image selected is",this.state.image)
                 });
+            };
+
+            for(let j=0;j<file.length;j++) {
+                reader.readAsDataURL(file[j]);
             }
-
-            reader.readAsDataURL(file);
+        }else{
+            alert("Select only images!!!")
         }
-
-        else {
-            alert("Please upload image only")
-            this.setState({
-                image: ''
-            });
-        }
-
-
 
     };
 
+
     render(){
-        console.log("user in Buzz++++++++++++++++",this.props.ReduxProps);
         return(
 
              <div className="my-container buzz-container">
@@ -130,7 +129,7 @@ export default class Buzz extends Component{
                      </div>
                          <form encType="multipart/form-data" className="uploadImage">
                              <img src={`/${require('../../../assets/images/upload.png')}`} className="camera"/>
-                             <input ref="file" type="file" name="file" className="cameraInput" onChange={this.imageUpload}/>
+                             <input ref="file" type="file" name="file" className="cameraInput" onChange={this.imageUpload} multiple/>
                          </form>
 
                          <button className="submit-buzz" onClick={this.addBuzz.bind(this)}>Submit</button>
@@ -146,8 +145,7 @@ export default class Buzz extends Component{
                  {this.state.err}
                  </div>
                  <RecentBuzz ReduxProps = {this.props.ReduxProps}/>
-
-            </div>
+             </div>
         )
     }
 }

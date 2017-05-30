@@ -1,13 +1,14 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var categoryTypes = ['Lost and Found','Activity'];
+let categoryTypes = ['Lost and Found','Activity'];
 
-var BuzzSchema = new mongoose.Schema({
+let BuzzSchema = new mongoose.Schema({
     category:{
         type:String,
-        enum:categoryTypes
+        enum:categoryTypes,
+        index:true
     },
     created_at: {
         type: Number,
@@ -21,14 +22,13 @@ var BuzzSchema = new mongoose.Schema({
         type:String
     },
     user_email:{
-        type:String
+        type:String,
+        index:true
     },
     user_imageURL:{
         type:String
     },
-    imageUpload:{
-        type:String
-    },
+    imageUpload:[],
     likes:[],
     dislike:[]
     },

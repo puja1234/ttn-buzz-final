@@ -4,20 +4,16 @@ import {Switch} from 'react-router-dom'
 
 import Main from './Users/Components/Main'
 import Home from './Users/Containers/Home'
-import About from './Users/Components/About'
-
 
 export default class App extends Component{
-
     render(){
         return(
             <Router>
                 <div>
                     <Switch>
-                    <Route exact path='/' component={Main}/>
-                    <Route path='/home' component={Home}/>
-                    <Route  path='/about' component={About}/>
-                    <Route  path='/*' component={Main}/>
+                        <Route exact path='/' component={Main}/>
+                        <Route path='/home' component={Home}/>
+                        <Route  path='/*' component={Main}/>
                     </Switch>
                 </div>
             </Router>

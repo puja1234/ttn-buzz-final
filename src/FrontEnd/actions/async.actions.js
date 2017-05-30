@@ -57,7 +57,7 @@ export const asyncActionFetchUserDetail = () => {
 };
 
 export const asyncActionPostBuzz = (postData) => {
- console.log('********post buzz async********',postData);
+
    return (dispatch) => { // this is store's dispatch method
             dispatch(postBuzzCallStarted()); // call started
             fetch('http://localhost:3000/api/Buzz', {
@@ -82,7 +82,7 @@ export const asyncActionGetBuzz = () => (dispatch,getState) => {
 
     let store = getState();
     let offset = store.postFetch.offset;
-    console.log("state in async buzz",offset);
+  //  console.log("state in async buzz",offset);
     // this is store's dispatch method
         dispatch(fetchPostCallStarted()); // call started
         fetch(`http://localhost:3000/api/Buzz?offset=${offset}`, {
@@ -95,7 +95,7 @@ export const asyncActionGetBuzz = () => (dispatch,getState) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log("data got from mongodb is:",data);
+                //console.log("data got from mongodb is:",data);
                 dispatch(fetchPostCallSuccess(data)); 	// success
             })
             .catch(err => {
@@ -130,7 +130,7 @@ export const asyncActionGetSpecificBuzz = (email) => {
 export const asyncLikes = (userLikePost) => {
     return (dispatch) => {
        dispatch(likePostStarted());
-       fetch('http://localhost:3000/api/likeDislike',{
+       fetch('http://localhost:3000/api/Buzz',{
            credentials: 'include',
            method: 'put',
            headers: {
@@ -141,7 +141,7 @@ export const asyncLikes = (userLikePost) => {
        })
            .then(response => response.json())
            .then((data) => {
-               console.log('>>>>>>>>>>>>>>>>>step 1................n');
+              // console.log('>>>>>>>>>>>>>>>>>step 1................n');
                dispatch(likePostSuccess(data))
            })
            .catch(err => {
@@ -151,10 +151,10 @@ export const asyncLikes = (userLikePost) => {
 }
 
 export const asyncComment = (commentPost) => {
-    console.log(commentPost)
+  //  console.log(commentPost)
     return (dispatch) => {
         dispatch(commentStarted());
-        fetch('http://localhost:3000/api/comment',{
+        fetch('http://localhost:3000/api/Comment',{
             credentials: 'include',
             method:'put',
             headers:{
@@ -177,7 +177,7 @@ export const asyncComment = (commentPost) => {
 export const asyncGetComment = () => {
     return (dispatch) => { // this is store's dispatch method
         dispatch(fetchCommentCallStarted()); // call started
-        fetch('http://localhost:3000/api/getComments', {
+        fetch('http://localhost:3000/api/Comment', {
             credentials: 'include',
             method: 'get',
             headers: {
@@ -197,10 +197,10 @@ export const asyncGetComment = () => {
 
 
 export const asyncDeletePost = (postId) => {
-    console.log("inside async action of delete",postId);
+   // console.log("inside async action of delete",postId);
     return (dispatch) => {
         dispatch(deletePostStarted());
-        fetch('http://localhost:3000/api/deletePost',{
+        fetch('http://localhost:3000/api/Buzz',{
             credentials: 'include',
             method: 'delete',
             headers: {
@@ -218,12 +218,12 @@ export const asyncDeletePost = (postId) => {
                 dispatch(deletePostFailed(err))
             })
     }
-}
+};
 
 export const deleteComment = (postId) => {
     return (dispatch) => {
         dispatch(deleteCommentStarted());
-        fetch('http://localhost:3000/api/deleteComment',{
+        fetch('http://localhost:3000/api/Comment',{
             credentials: 'include',
             method: 'delete',
             headers: {
@@ -245,10 +245,10 @@ export const deleteComment = (postId) => {
 
 export const asyncPostComplaint = (complaint) => {
 
-    console.log("inside async of complaint$$$$$$$$$$$$$$$4",complaint);
+   // console.log("inside async of complaint$$$$$$$$$$$$$$$4",complaint);
     return (dispatch) => {
         dispatch(complaintStarted());
-        fetch('http://localhost:3000/api/complaint',{
+        fetch('http://localhost:3000/api/Complaint',{
             credentials: 'include',
             method: 'post',
             headers: {
@@ -273,7 +273,7 @@ export const asyncGetComplaints = () => {
 
     return (dispatch) => {
         dispatch(complaintGetStarted());
-        fetch('http://localhost:3000/api/complaint',{
+        fetch('http://localhost:3000/api/Complaint',{
             credentials: 'include',
             method: 'get',
 
@@ -296,7 +296,7 @@ export const asyncUpdateStatus = (id,status) => {
     };
     return (dispatch) => {
         dispatch(changeStatusStarted());
-        fetch('http://localhost:3000/api/changeStatus',{
+        fetch('http://localhost:3000/api/Complaint',{
             credentials: 'include',
             method:'put',
             headers:{
@@ -334,10 +334,10 @@ export const asyncGetMyComplaints =() => {
 };
 
 export const asyncDeleteComplaint = (id) => {
-    console.log("id to be deleted is ,",id);
+  //  console.log("id to be deleted is ,",id);
     return (dispatch) => {
         dispatch(deleteComplaintStarted());
-        fetch('http://localhost:3000/api/deleteComplaint', {
+        fetch('http://localhost:3000/api/Complaint', {
             credentials: 'include',
             method: 'delete',
             headers: {

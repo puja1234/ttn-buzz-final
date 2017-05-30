@@ -35,7 +35,8 @@ import {
     GET_ALL_COMPLAINT_SUCCESS,
     DELETE_COMPLAINT_STARTED,
     DELETE_COMPLAINT_SUCCESS,
-    DELETE_COMPLAINT_FAILED
+    DELETE_COMPLAINT_FAILED,
+    FETCH_CATEGORY_BUZZ_SUCCESS
 } from './../config/config.constants'
 
 export function apiCallStarted() {
@@ -185,6 +186,10 @@ export function deleteComplaintSuccess(deletedComplaint) {
 
 export function deleteComplaintFailed(err) {
     return { type:DELETE_COMPLAINT_FAILED,err }
+}
+
+export function fetchCategoryBuzzCallSuccess(categoryBuzz) {
+    return { type:FETCH_CATEGORY_BUZZ_SUCCESS,categoryBuzz }
 }
 
 

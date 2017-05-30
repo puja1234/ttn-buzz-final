@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
 module.exports = conn = mongoose.connect('mongodb://localhost/BuzzApp');
 
@@ -7,7 +7,7 @@ module.exports = conn = mongoose.connect('mongodb://localhost/BuzzApp');
     });
     mongoose.connection.on('error',function (err,data) {
         console.log('could not connect',err);
-    })
+    });
 
 
 

@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var CommentSchema = new Schema({
+const CommentSchema = new Schema({
     created_at: {
         type: Number,
         default: Date.now
@@ -13,8 +13,14 @@ var CommentSchema = new Schema({
         default: Date.now
     },
     content : String,
-    postId : String,
-    userEmail:String,
+    postId : {
+        type:String,
+        index:true
+    },
+    userEmail:{
+        type:String,
+        index:true
+    },
     user_Profile:String
 });
 

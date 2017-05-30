@@ -1,42 +1,36 @@
 import React,{Component} from 'react'
 import get from 'lodash/get';
-import { connect } from 'react-redux';
 
 import like from '../../../assets/images/like.png'
 import dislike from '../../../assets/images/dislike.png'
 import '../../../assets/styling/RecentBuzz.css'
 import { asyncActionGetBuzz,asyncLikes,asyncGetComment,asyncDeletePost,asyncGetTotalBuzz } from '../../../actions'
 import Comment from './Comment'
-import more from '../../../assets/images/more.png'
+import NextImage from './NextImage'
 
 export default class RecentBuzz extends Component{
     constructor(props){
         super(props);
         this.state={
             comment:'',
-
+            index:0
         }
     }
     checkifLast = () => {
-        return (document.body.scrollHeight - 20 < (document.body.scrollTop + window.innerHeight));
+        return (document.body.scrollHeight - 5 < (document.body.scrollTop + window.innerHeight));
     };
     onWindowScroll = () => {
         let res = this.checkifLast();
         if (res) {
-            // const offset = this.props.ReduxProps.postFetch.offset;
-            // console.log("offset is:", offset);
             this.props.ReduxProps.dispatch(asyncActionGetBuzz());
         }
     };
 
-    componentWillMount(){
-        // const offset = this.props.ReduxProps.postFetch.offset;
-        // console.log("offset is:",offset);
+    componentDidMount(){
         this.props.ReduxProps.dispatch(asyncActionGetBuzz());
-        // this.props.fetchBuzz();
         this.props.ReduxProps.dispatch(asyncGetComment());
-       window.addEventListener('scroll', this.onWindowScroll);
-       // this.props.ReduxProps.dispatch(asyncGetTotalBuzz());
+        window.addEventListener('scroll', this.onWindowScroll);
+
     }
 
     componentWillUnmount() {
@@ -44,21 +38,36 @@ export default class RecentBuzz extends Component{
     }
 
     likeDislike = (email,postID,category) => {
-        let userLikePost = {
-                user_email: email,
-                postID: postID,
-                choice: category
-            };
-        this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+        const recent_buzz = this.props.ReduxProps.postFetch.buzz;
+        let buzzMatch = recent_buzz.find(function (items) {
+            return items._id === postID
+        });
+        if (category === 'like') {
+            if (buzzMatch.likes.indexOf(email) >= 0)
+                alert("You had already liked this post");
+            else {
+                let userLikePost = {
+                    user_email: email,
+                    postID: postID,
+                    choice: category
+                };
+                this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+            }
+        } else {
+            if (buzzMatch.dislike.indexOf(email)>=0)
+                alert("You had already disliked this post");
+            else {
+                let userLikePost = {
+                    user_email: email,
+                    postID: postID,
+                    choice: category
+                };
+                this.props.ReduxProps.dispatch(asyncLikes(userLikePost));
+            }
+        }
+    }
 
-        // console.log("category and email is :", category, email)
-        // let userLikePost = {
-        //     user_email: email,
-        //     postID: postID,
-        //     choice: category
-        // }
-        // let buzzArray = this.props.ReduxProps.postFetch.buzz;
-        // console.log("buzz array is ", buzzArray)
+
         // let buzzMatches = find(buzzArray, function (post) {
         //     return post._id == postID
         // });//check if user has already liked
@@ -87,26 +96,18 @@ export default class RecentBuzz extends Component{
         //
         //     });
         // }
-    };
 
-    // show_more_buzz = () => {
-    //     const offset = this.props.ReduxProps.postFetch.offset;
-    //     console.log("offset is:",offset);
-    //     this.props.ReduxProps.dispatch(asyncActionGetBuzz(offset,2));
-    // };
 
     deletePost = (postId) => {
         this.props.ReduxProps.dispatch(asyncDeletePost(postId));
-       // this.props.ReduxProps.dispatch(asyncActionGetBuzz());
+
     };
 
     render(){
         let index = 0;
+
         const recent_buzz = this.props.ReduxProps.postFetch.buzz;
-        console.log("props in recentbuzz",this.props.ReduxProps);
-        console.log("totl buzz received :",recent_buzz);
         const commentsState = get(this.props.ReduxProps.commentReducer,'commentPost');
-        console.log("content in comments in is....................",commentsState);
         const email = get(this.props.ReduxProps.userFetch, 'users.email');
         const image = get(this.props.ReduxProps.userFetch, 'users.imageURL');
 
@@ -126,10 +127,17 @@ export default class RecentBuzz extends Component{
                                 </div> :
                                 <div></div>
                             }
-                            { items.imageUpload ?
-                                <img src={"http://localhost:3000/files/"+items.imageUpload} className="posted-image"/>:
-                                <div></div>
+
+                            {items.imageUpload.length > 1 ?
+                                <NextImage buzzImage={items}/>:
+                                ( items.imageUpload ?
+                                    (items.imageUpload.map((images) =>{
+                                        return <img src={"http://localhost:3000/files/"+images.filename} className="posted-image"/>
+                                    })) : ''
+                                )
+
                             }
+
 
                             <p className="content">
                                 { items.content }
@@ -183,19 +191,10 @@ export default class RecentBuzz extends Component{
                                 <Comment ReduxState={this.props.ReduxProps} email={email} userImage={image} buzzID = {items._id}/>
                             </div>
                 ))}
-              {/*<img src={more} onClick={()=> this.show_more_buzz()} className="more" />*/}
+
             </div>
         )
     }
 }
 
-/*const mapStateToProps = (state) => ({
-    buzz: state.buzz,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    fetchBuzz: () => dispatch(asyncActionGetBuzz()),
-});
-const RecentBuzzContainer=connect(mapStateToProps,mapDispatchToProps)(RecentBuzz);
-export default RecentBuzzContainer*/
 

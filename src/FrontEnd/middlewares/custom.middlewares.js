@@ -1,4 +1,3 @@
-export var logger = ( store ) => ( next ) => ( action ) => {
-
+export const logger = ( store ) => ( next ) => ( action ) => {
     next(action);
-}
+};

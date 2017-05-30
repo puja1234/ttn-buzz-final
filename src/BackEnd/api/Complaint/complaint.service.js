@@ -1,18 +1,18 @@
 let Complaint = require('./complaint.model');
-exports.createComplaint = (complaintData, res) => {
 
+//create Complaint
+exports.createComplaint = (complaintData, res) => {
     Complaint.create(complaintData, (err, data) => {
         if (err) {
             res.send("error occured in creating complaint");
         }
-
-        if (data) {
+        else{
             res.send(data);
         }
     })
-
 };
 
+//get admin specific complaints
 exports.getComplaints = (email,res) => {
     Complaint.find({assignee_email:email} , (err,data) => {
         if(err)
@@ -22,6 +22,7 @@ exports.getComplaints = (email,res) => {
     })
 };
 
+//admin change complaint status
 exports.changeStatus = (statusData,res) => {
     if(statusData.status === 'close'){
         Complaint.find({_id: statusData.id}, (err, data) => {
@@ -32,29 +33,25 @@ exports.changeStatus = (statusData,res) => {
                     if (err)
                         res.send(err);
                     else{
-                        console.log(data,">>>>>>>>>>>>>>>>>>>>>")
                         res.send(data);
                     }
-
                 })
             }
         });
     }else{
-        console.log("status in service is resolving");
         Complaint.update({_id:statusData.id},{$set:{status:'resolve'}},(err,data) => {
             if(err)
                 res.send(err);
             else {
-                console.log("status is updated",data);
                 Complaint.find({_id: statusData.id}, (err, data) => {
-                    console.log("document updated is------------------------", data);
-                    res.send(data);
+                  res.send(data);
                 })
             }
        })
     }
 };
 
+//get my complaints
 exports.getUserSpecificComplaint =(email,res) => {
     Complaint.find({complaint_by:email} , (err,data) => {
         if(err)
@@ -64,8 +61,8 @@ exports.getUserSpecificComplaint =(email,res) => {
     })
 };
 
+//delete my complaints
 exports.deleteComplaint = (id,res) => {
-    console.log("-----------------document to be deleted in service is--------------",id);
     Complaint.find({_id:id},(err,data)=>{
         if(err)
             res.send(err);
@@ -74,11 +71,9 @@ exports.deleteComplaint = (id,res) => {
                 if(err)
                     res.send(err);
                 else {
-                    console.log("----------------deleted document is-------------", data);
                     res.send(data);
                 }
             })
         }
     });
-
 };

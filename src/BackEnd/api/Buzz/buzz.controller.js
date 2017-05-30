@@ -1,56 +1,42 @@
-var PostService = require('./buzz.service')
+let PostService = require('./buzz.service');
 
-
-
-exports.getPost = (req,res,next) => { //get list of posts
+//get list of posts
+exports.getPost = (req,res,next) => {
     let offset = parseInt(req.param('offset'));
-    console.log('wyeqwetrqywe',offset);
-    //let limits = parseInt(req.param('limits'));
+    PostService.getPosts(offset,2,res);
+};
 
-   console.log("getting all posts controller skip",offset);
- //  console.log("getting all posts controller limit",limits);
-   PostService.getPosts(offset,2,res);
-
-}
 //get user specicfic post
-exports.getSpecificPost = (req,res,next) => { //get list of posts
-    console.log("getting specific posts");
+exports.getSpecificPost = (req,res,next) => {
     email = req.body;
     PostService.getSpecificPosts(email,res);
-}
+};
+
 //get post by category
+exports.createPost =(req,res) => {
+     let buzz = JSON.parse(req.body.buzzdata);
+    console.log("req>>>>>>>>>>>>>>>>>>>", req.files);
 
-
-exports.createPost =(req,res) => { //create new post in db
-    let buzz = JSON.parse(req.body.buzzdata);
-   console.log("req>>>>>>>>>>>>>>>>>>>",buzz, req.file);
-
-   const buzzData =  {}
-   buzzData.category= buzz.actionType;
-   buzzData.content = buzz.buzz;
-   buzzData.user_email = buzz.posted_by;
-   buzzData.user_imageURL = buzz.posted_by_image;
-   if(req.file){
-       buzzData.imageUpload = req.file.filename;
-   }else{
-       buzzData.imageUpload = ''
-   }
-
-
-    console.log("Creating post",buzzData);
+    const buzzData =  {};
+    buzzData.category= buzz.actionType;
+    buzzData.content = buzz.buzz;
+    buzzData.user_email = buzz.posted_by;
+    buzzData.user_imageURL = buzz.posted_by_image;
+    buzzData.imageUpload=[];
+    for(let i=0;i<req.files.length;i++) {
+        buzzData.imageUpload[i] = req.files[i];
+    }
     PostService.createPost(buzzData,res);
-}
-//update post in db
+};
 
 //delete post from db
 exports.deletePost = (req,res,next) => {
-    console.log("inside delete post with id",req.body);
     let id = req.body.postId;
-    // console.log("inside delete post with id",id)
     PostService.deletePost(id,res);
-}
+};
 
-exports.updateLikes = (req,res,next) => {  //update post specicif like
+//update post specicif likes-dislikes
+exports.updateLikes = (req,res,next) => {
     let likeData = req.body.userLikePost;
     let buzzId = likeData.postID;
     let userEmail = likeData.user_email;
@@ -59,7 +45,12 @@ exports.updateLikes = (req,res,next) => {  //update post specicif like
 };
 
 exports.getTotal = (req,res,next) => {
-    console.log("getting total buzzes");
     PostService.getTotal(res);
-}
+};
+
+exports.getCategoryBuzz =(req,res,next) => {
+    let category = req.param('category');
+    console.log("in controller to get category buzzes",category);
+    PostService.getCategoryBuzz(category,res);
+};
 

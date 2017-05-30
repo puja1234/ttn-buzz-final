@@ -5,7 +5,7 @@ import {asyncActionFetchUserDetail} from '../../../actions';
 
 export default (isAuthRoute)=>(NewComponent)=> {
     class isAuthenticated extends Component{
-    componentWillMount(){
+    componentDidMount(){
         this.props.dispatch(asyncActionFetchUserDetail());
     }
     render(){
@@ -25,8 +25,6 @@ export default (isAuthRoute)=>(NewComponent)=> {
         }
 
     }
-
-
     }
     const mapStateToProps = state => {
         return state;

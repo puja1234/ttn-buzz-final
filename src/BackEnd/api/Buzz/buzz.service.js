@@ -1,68 +1,49 @@
 let Post = require('./buzz.model');
 
+//create buzz
 exports.createPost = (postData, res) => {
-
     Post.create(postData, (err, data) => {
-        if (err) {
+        if (err)
             res.send("error occured in creating post");
-        }
-
-        if (data) {
+        else
             res.send(data);
-        }
     })
-
-}
-
-exports.getPosts = (offset,limits,res) => {   //get all posts
-   console.log("inside service of getting posts skipping", offset);
-    console.log("inside service of getting posts limiting", limits);
-     /*let totalQuery= Post.find({}).count();
-      totalQuery.exec((err,data)=>{
-          if(err)
-              console.log(err);
-          else {
-              if (offset <= data) {
-                  console.log(offset, "iss less than", data);*/
-                  var q = Post.find({}).sort({created_at: -1}).skip(offset).limit(2);
-                  q.exec(function (err, data) {
-                      if (err) {
-                          res.send(err);
-                      } else {
-                          console.log("data got from mongo ********posts",data);
-                          res.send(data)
-                      }
-                  });
-             /* }
-              else
-                  res.send();
-          }*/
-      // });
 };
 
-exports.getSpecificPosts = (email, res) => {   //get all posts
-
-    Post.find({"user_email": email}, (err, data) => {
-        if (err) {
+//get all posts
+exports.getPosts = (offset,limits,res) => {
+    let q = Post.find({}).sort({created_at: -1}).skip(offset).limit(2);
+    q.exec(function (err, data) {
+        if (err)
             res.send(err);
-        } else {
+       else
             res.send(data)
-        }
-    })
-}
+    });
+};
 
-exports.updateLikes = (buzzID, userEmail, category, res) => { //update likes for the post
-    var post = Post.find({}).cursor();
-    if (category === 'like') {
+//get user specific posts
+exports.getSpecificPosts = (email, res) => {
+    Post.find({"user_email": email}, (err, data) => {
+        if (err)
+            res.send(err);
+         else
+            res.send(data)
+    })
+};
+
+//update likes for the post
+exports.updateLikes = (buzzID, userEmail, category, res) => {
+    let post = Post.find({}).cursor();
+    if (category === 'like') {   //if user has liked the post
         post.on('data', function (doc) {
             if (doc._id == buzzID) {
-                var check = doc.dislike.filter((item) => {
+               let check = doc.dislike.filter((item) => {   //check if that user has already disliked the post
                     return item == userEmail
-                })
+                });
                 if (check != null) {
-                    Post.update({_id: buzzID}, {$pull: {dislike: userEmail}}, {safe: true}, (err, data) => {
+                    Post.update({_id: buzzID}, {$pull: {dislike: userEmail}}, {safe: true}, (err, data) => { //pull that user from dislike array
                         if (err)
-                            console.log(err)
+                            console.log(err);
                         else
                             console.log("data after pull", data)
                     })
@@ -88,18 +69,16 @@ exports.updateLikes = (buzzID, userEmail, category, res) => { //update likes for
             }
         })
 
-    } else {
-        console.log("inside dislike")
+    } else {  //if user has disliked the post
         post.on('data', function (doc) {
             if (doc._id == buzzID) {
-                var check = doc.likes.filter((item) => {
+               let check = doc.likes.filter((item) => {  //check if user has already liked the post
                     return item == userEmail
-                })
+                });
                 if (check != null) {
-                    console.log("there is data in like that is same")
-                    Post.update({_id: buzzID}, {$pull: {likes: userEmail}}, {safe: true}, (err, data) => {
+                    Post.update({_id: buzzID}, {$pull: {likes: userEmail}}, {safe: true}, (err, data) => {  //pull user from like array
                         if (err)
-                            console.log(err)
+                            console.log(err);
                         else
                             console.log("data after pull", data)
                     })
@@ -113,7 +92,7 @@ exports.updateLikes = (buzzID, userEmail, category, res) => { //update likes for
                 } else {
                     Post.update({_id: buzzID}, {$push: {dislike: userEmail}}, (err, data) => {
                         if (err)
-                            res.send(err)
+                            res.send(err);
                         else
                             Post.find({_id: buzzID}, (err, data) => {
                                 res.send(data)
@@ -127,23 +106,9 @@ exports.updateLikes = (buzzID, userEmail, category, res) => { //update likes for
     }
 };
 
+//delete post
 exports.deletePost = (id, res) => {
-    console.log("deleting post ");
-    /*Post.remove({ _id: id}, (err,data)=> {
-        if (err) {
-            res.send(err);
-        }
-        else {
-            Post.find({},(err,data)=>{
-                if(err)
-                    res.send(err);
-                else
-                    res.send(data)
-            })
-
-        }
-    });*/
-  Post.find({_id: id}, (err, data) => {
+    Post.find({_id: id}, (err, data) => {
         if (err)
             res.send(err);
         else {
@@ -151,31 +116,12 @@ exports.deletePost = (id, res) => {
                 if (err)
                     res.send(err);
                 else{
-                    console.log("deleted in service ",data);
                     res.send(data);
                 }
-
             })
         }
     });
 };
-    /*Post.findOneAndDelete({_id: id}, (err, data) => {
-        if (err)
-            res.send(err);
-            else
-                res.send(data);*/
-        /*}
-        else {
-            Post.find({}, (err, data) => {
-                if (err)
-                    res.send(err);
-                else
-                    res.send(data)
-            })
-
-        }*/
-//     });
-// };
 
 exports.getTotal = (res) => {
     Post.count({}, (err, counts) => {
@@ -186,5 +132,14 @@ exports.getTotal = (res) => {
     })
 };
 
+exports.getCategoryBuzz = (categories,res) => {
+    Post.find({category:categories} , (err,data) => {
+        if(err)
+            res.send(err);
+        else
+            console.log("data from mongo with category",categories,"are : -------------",data);
+            res.send(data)
+    })
+};
 
 

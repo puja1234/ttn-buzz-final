@@ -1,8 +1,9 @@
-var User = require('./user.model.js');
+let User = require('./user.model.js');
 
 exports.createUser = ( userData,callback ) => {
-   console.log("inside service",userData);
-    User.create(userData,(err,data) => {  //create user
+
+    //create user
+    User.create(userData,(err,data) => {
         if(err){
             return callback(err);
         }
@@ -10,5 +11,5 @@ exports.createUser = ( userData,callback ) => {
             return callback(null, data);
         }
     })
-}
+};
 

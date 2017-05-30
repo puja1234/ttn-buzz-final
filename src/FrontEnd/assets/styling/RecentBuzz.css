@@ -22,13 +22,6 @@
     position: relative;
 }
 
-.recentBuzz .posted-image {
-    margin: 20px;
-    float: right;
-    display: block;
-    width: 250px;
-}
-
 .recentBuzz .like-dislike {
     float:right;
     padding: 2px;
@@ -104,6 +97,7 @@ ul li ul.dropdown li{
 
 .delete {
     float: right;
+    width: 13%;;
 }
 
 .edit {
@@ -208,10 +202,39 @@ width:5%;
     width: 80%;
 }
 
-.delete{
-    width: 4%;
-}
-
 .comments-image {
     width: 10%;
+}
+
+.carousel {
+    width: 40%;
+    float: right;
+}
+
+.next {
+    float: right;
+    width: 10%;
+    margin-top: 80px;
+}
+
+.prev {
+    margin-top: 80px;
+    float: right;
+    width: 10%;
+}
+
+.recentBuzz .posted-image {
+    margin: 20px;
+    float: right;
+    width: 38%;
+    display: inline-block;
+
+}
+
+.activity my-container {
+    width: 80%;
+}
+
+.activity body {
+    width: 100%;
 }

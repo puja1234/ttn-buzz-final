@@ -10,24 +10,22 @@ export default class Complaints extends Component{
     constructor(props){
         super(props);
         this.state = {
-            complaint_type:'',
+            complaint_type:'Software',
             complaint_content:'',
-            assignee_email:''
+            assignee_email:'kanishka.sikka@tothenew.com'
         }
     }
 
     onComplaintChange =(event) => {
         this.setState({complaint_type:event.target.value}, function () {
             if(this.state.complaint_type === 'Hardware') {
-                this.setState({assignee_email: 'anchal.jain@tothenew.com'}, function () {
-                    console.log("assigned to_____________", this.state.assignee_email)
-                })
+                this.setState({assignee_email: 'anchal.jain@tothenew.com'})
             }else{
-                if(this.state.complaint_type === 'Software') {
-                    this.setState({assignee_email: 'kanishka.sikka@tothenew.com'})
+                if(this.state.complaint_type === 'Others') {
+                    this.setState({assignee_email: 'lata.tiwari@tothenew.com'})
                 }
                 else {
-                    this.setState({assignee_email:'lata.tiwari@tothenew.com'})
+                    this.setState({assignee_email:'kanishka.sikka@tothenew.com'})
                 }
             }
         })
@@ -58,7 +56,6 @@ export default class Complaints extends Component{
     };
 
     render(){
-        console.log('this-----------props------------',this.props);
         const email = get(this.props.ReduxProps.userFetch, 'users.email');
         return(
             <div>
